@@ -1,0 +1,7 @@
+*.pyc
+__pycache__
+logs
+data
+*.db
+*.log
+*.json
