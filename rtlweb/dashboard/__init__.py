@@ -12,6 +12,8 @@ import traceback
 import datetime
 import requests
 
+from rtlweb.dashboard.hls import HLS
+
 class Dashboard:
 	def __init__(self, main, host="127.0.0.1", port=4321, portDebug=5432, debugMode=False):
 		self.main = main
@@ -26,6 +28,10 @@ class Dashboard:
 		self.app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 		self.socketio = SocketIO(self.app)
+
+		self.radio = main.radio
+
+		self.hls = HLS(self)
 	def generateKey(self, length):
 		a = None
 
@@ -39,7 +45,10 @@ class Dashboard:
 		# Pages
 		@self.app.route("/")
 		def index():
-			return render_template("index.html")
+			if "freq" in request.args:
+				self.main.radio.freq = int(request.args["freq"])
+
+			return render_template("index.html", radio=self.main.radio)
 
 		# Custom filters
 		@self.app.template_filter()

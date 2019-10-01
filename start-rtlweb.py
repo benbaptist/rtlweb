@@ -1,4 +1,4 @@
-from example import Main
+from rtlweb import Main
 
 # Dependencies:
 # pip3 install msgpack flask flask_socketio flask_htmlmin eventlet

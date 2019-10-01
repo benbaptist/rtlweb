@@ -1,5 +1,32 @@
 {% extends "layout.html" %}
 
+{% block head %}
+<script>
+    refresh = function(){
+        $.get("/metadata")
+    }
+    $(document).ready(function(){
+        setInterval(refresh, 200)
+    })
+</script>
+{% endblock %}
+
 {% block body %}
-    <h1>Ohai world!</h1>
+    <h1>SDR</h1>
+    <audio src="/static/hls/stream.m3u8" controls autoplay id="stream"></audio><br/>
+
+    Tuned to {{ radio.freq / 1000 / 1000 }}MHz.
+
+    {% if radio.demod %}
+        Using mode '{{ radio.demod.mode }}'.
+
+        {% if radio.demod.mode == "wbfm" %}
+            <ul>
+                <li>Callsign: {{ radio.demod.rds["callsign"] }} </li>
+                <li>Genre: {{ radio.demod.rds["genre"] }} </li>
+                <li>PS: {{ radio.demod.rds["ps"] }} </li>
+                <li>Radio Text: {{ radio.demod.rds["radiotext"] }} </li>
+            </ul>
+        {% endif %}
+    {% endif %}
 {% endblock %}

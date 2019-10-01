@@ -2,11 +2,11 @@ import os
 import threading
 import time
 
-from example.logmanager import LogManager
-from example.dashboard import Dashboard
-from example.storify import Storify
-from example.config import Config
-# from example.gui import GUI # uncomment if needed
+from rtlweb.logmanager import LogManager
+from rtlweb.dashboard import Dashboard
+from rtlweb.storify import Storify
+from rtlweb.config import Config
+from rtlweb.radio import Radio
 
 class Main:
 
@@ -31,11 +31,10 @@ class Main:
 		self.storify = Storify(log=self.logManager.getLogger("Storify"))
 		self.db = self.storify.getDB("main")
 
+		self.radio = Radio(self.logManager)
+
 		# Initialize dashboard (comment if not needed)
 		self.dashboard = Dashboard(self, host=self.config["dashboard"]["bind"], port=self.config["dashboard"]["port"])
-
-		# Initialize GUI (uncomment if needed)
-		# self.gui = GUI("http://127.0.0.1:%s" % self.dashboard.port, self)
 
 		self.threads = {}
 		self.abort = False
@@ -48,10 +47,6 @@ class Main:
 		self.threads["dashboard"].daemon = True
 		self.threads["dashboard"].start()
 
-		# Start GUI (uncomment if needed)
-		# time.sleep(1)
-		# self.gui.run()
-
 		try:
 			self.run()
 		except KeyboardInterrupt:
@@ -61,8 +56,9 @@ class Main:
 	def run(self):
 		while not self.abort:
 			# Tick
+			self.radio.tick()
 
 			# Storify tick
 			self.storify.tick()
 
-			time.sleep(1)
+			time.sleep(.01)

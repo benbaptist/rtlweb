@@ -5,3 +5,4 @@ data
 *.db
 *.log
 *.json
+rtlweb/dashboard/static/hls/*
