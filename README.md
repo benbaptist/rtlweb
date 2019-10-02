@@ -54,8 +54,10 @@ make install
 Ensure HLS & AAC support is enabled. Usually, ffmpeg from the Debian/ffmpeg repositories are good.
 
 5. Clone this repository.
-```git clone https://github.com/benbaptist/rtlweb.git
-cd rtlweb```
+```
+git clone https://github.com/benbaptist/rtlweb.git
+cd rtlweb
+```
 
 6. Start, and enjoy!
 ```python3 start-rtlweb.py```
