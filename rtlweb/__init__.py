@@ -33,16 +33,14 @@ class Main:
 
 		self.radio = Radio(self.logManager)
 
-		# Initialize dashboard (comment if not needed)
+		# Initialize dashboard
 		self.dashboard = Dashboard(self, host=self.config["dashboard"]["bind"], port=self.config["dashboard"]["port"])
 
 		self.threads = {}
 		self.abort = False
 
 	def start(self):
-		# Put stuff here
-
-		# Start dashboard (comment if not needed)
+		# Start dashboard
 		self.threads["dashboard"] = threading.Thread(target=self.dashboard.run, args=())
 		self.threads["dashboard"].daemon = True
 		self.threads["dashboard"].start()

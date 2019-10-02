@@ -1,6 +1,5 @@
 from flask import Flask, g, redirect, url_for, render_template, request, make_response, Response, Markup
 from flask_socketio import SocketIO, send, emit, join_room, leave_room
-# from flask.ext_htmlmin import HTMLMIN
 from flask_htmlmin import HTMLMIN
 
 import os
