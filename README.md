@@ -17,24 +17,24 @@ rtlweb is written on top of Python 3.x, and was intended for use under a Linux s
 
 A simple guide to get up and running. Assumes an Ubuntu/Debian-like environment.
 
-1. Run this to install the Python modules.
-`pip3 install msgpack flask flask_socketio flask_htmlmin eventlet`
+- Run this to install the Python modules.
+```pip3 install msgpack flask flask_socketio flask_htmlmin eventlet```
 
-2. Compile and install rx-tools
+- Compile and install rx-tools
 
 Install dependency for rx_tools.
-`sudo apt install libsoapysdr-dev`
+```sudo apt install libsoapysdr-dev```
 
 Grab rx_tools' latest source.
-`git clone https://github.com/rxseger/rx_tools.git`
+```git clone https://github.com/rxseger/rx_tools.git```
 
-`cmake .
-make`
+```cmake .
+make```
 
 Install. It may require root to run this command.
-`make install`
+```make install```
 
-3. Compile and install red-sea
+- Compile and install red-sea
 
 ```
 # Install dependencies for redsea
@@ -50,7 +50,7 @@ cd redsea
 make install
 ```
 
-4. Install ffmpeg.
+- Install ffmpeg.
 Ensure HLS & AAC support is enabled. Usually, ffmpeg from the Debian/ffmpeg repositories are good.
 
 5. Clone this repository.
