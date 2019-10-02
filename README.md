@@ -26,13 +26,17 @@ Install dependency for rx_tools.
 ```sudo apt install libsoapysdr-dev```
 
 Grab rx_tools' latest source.
-```git clone https://github.com/rxseger/rx_tools.git```
+```
+git clone https://github.com/rxseger/rx_tools.git
+cd rx_tools
+cmake .
+make
+```
 
-```cmake .
-make```
-
-Install. It may require root to run this command.
-```make install```
+Install it. It may require root to run this command.
+```
+make install
+```
 
 - Compile and install red-sea
 
