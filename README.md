@@ -1,6 +1,6 @@
 Python-based SDR receiver, controlled entirely over the web. All processing performed server-side, for minimum bandwidth impact.
 
-__Dependencies__
+# Dependencies
 rtlweb is written on top of Python 3.x, and was intended for use under a Linux system.
 
 - Linux
@@ -13,7 +13,7 @@ rtlweb is written on top of Python 3.x, and was intended for use under a Linux s
 - flask_htmlmin (`pip3 install flask_htmlmin`)
 - flask_htmlmin (`pip3 install flask_htmlmin`)
 
-__Quick Start__
+# Quick Start
 
 A simple guide to get up and running. Assumes an Ubuntu/Debian-like environment.
 
