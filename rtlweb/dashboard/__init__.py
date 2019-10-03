@@ -49,6 +49,32 @@ class Dashboard:
 
 			return render_template("index.html", radio=self.main.radio)
 
+		@self.app.route("/call/<path:method>")
+		def call(method):
+			radio = self.main.radio
+			payload = {}
+
+			if method == "set_freq":
+				freq = int(request.args["freq"])
+				radio.freq = freq
+
+			if method == "sub_freq":
+				freq = int(request.args["freq"])
+				radio.freq -= freq
+
+			if method == "add_freq":
+				freq = int(request.args["freq"])
+				radio.freq += freq
+
+			if method == "poll_info":
+				payload = {
+					"freq": radio.freq,
+					"demod_name": radio.demod.mode,
+					"demod_stats": radio.demod.stats
+				}
+
+			return json.dumps(payload)
+
 		# Custom filters
 		@self.app.template_filter()
 		def dt(ts):

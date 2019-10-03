@@ -5,6 +5,7 @@ class Demods:
         self.log = radio.log_manager.getLogger("Radio/%s" % self.mode)
 
         self.current_freq = radio.freq
+        self.stats = {}
 
     # def realtick(self):
     #     self.tick()

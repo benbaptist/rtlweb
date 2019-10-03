@@ -22,7 +22,6 @@ A simple guide to get up and running. Assumes an Ubuntu/Debian-like environment.
 
 - Compile and install rx-tools
 
-Install dependency for rx_tools.
 ```sudo apt install libsoapysdr-dev```
 
 Grab rx_tools' latest source.
@@ -57,11 +56,13 @@ make install
 - Install ffmpeg.
 Ensure HLS & AAC support is enabled. Usually, ffmpeg from the Debian/ffmpeg repositories are good.
 
-5. Clone this repository.
+- Clone this repository.
 ```
 git clone https://github.com/benbaptist/rtlweb.git
 cd rtlweb
 ```
 
-6. Start, and enjoy!
-```python3 start-rtlweb.py```
+- Start, and enjoy!
+```
+python3 start-rtlweb.py
+```

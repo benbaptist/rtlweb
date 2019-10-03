@@ -3,8 +3,36 @@
 {% block head %}
 <script>
     refresh = function(){
-        $.get("/metadata")
+        $.get("/call/poll_info")
+        .done(function(data){
+            payload = JSON.parse(data)
+
+            $("#frequency").text(payload["freq"] + "Hz | " + (payload["freq"] / 1000 / 1000) + "MHz")
+            $("#demod_name").text(payload["demod_name"])
+
+            if(payload["demod_name"] == "wbfm"){
+                $("#demod-wbfm").attr("style", "display:block")
+                $("#wbfm-callsign").text(payload["demod_stats"]["rds"]["callsign"])
+                $("#wbfm-genre").text(payload["demod_stats"]["rds"]["genre"])
+                $("#wbfm-ps").text(payload["demod_stats"]["rds"]["ps"])
+                $("#wbfm-radiotext").text(payload["demod_stats"]["rds"]["radiotext"])
+                $("#wbfm-bler").text(payload["demod_stats"]["rds"]["bler"] + "%")
+            }
+        })
     }
+
+    set_freq = function(freq){
+        $.get("/call/set_freq?freq="+freq)
+    }
+
+    add_freq = function(freq_delta){
+        $.get("/call/add_freq?freq="+freq_delta)
+    }
+
+    sub_freq = function(freq_delta){
+        $.get("/call/sub_freq?freq="+freq_delta)
+    }
+
     $(document).ready(function(){
         setInterval(refresh, 200)
     })
@@ -15,18 +43,32 @@
     <h1>SDR</h1>
     <audio src="/static/hls/stream.m3u8" controls autoplay id="stream"></audio><br/>
 
-    Tuned to {{ radio.freq / 1000 / 1000 }}MHz.
+    <input type="number" id="set_freq" placeholder="frequency"/>
+    <button onclick="set_freq($('#set_freq')[0].value)">Set</button><br/>
 
-    {% if radio.demod %}
-        Using mode '{{ radio.demod.mode }}'.
+    <button onclick="sub_freq('10000000')">- 10MHz</button>
+    <button onclick="sub_freq('1000000')">- 1MHz</button>
+    <button onclick="sub_freq('500000')">- 500KHz</button>
+    <button onclick="sub_freq('200000')">- 200KHz</button>
+    <button onclick="sub_freq('100000')">- 100KHz</button>
+    |
+    <button onclick="add_freq('100000')">+ 100KHz</button>
+    <button onclick="add_freq('200000')">+ 200KHz</button>
+    <button onclick="add_freq('500000')">+ 500KHz</button>
+    <button onclick="add_freq('1000000')">+ 1MHz</button>
+    <button onclick="add_freq('10000000')">+ 10MHz</button>
+    <hr/>
 
-        {% if radio.demod.mode == "wbfm" %}
-            <ul>
-                <li>Callsign: {{ radio.demod.rds["callsign"] }} </li>
-                <li>Genre: {{ radio.demod.rds["genre"] }} </li>
-                <li>PS: {{ radio.demod.rds["ps"] }} </li>
-                <li>Radio Text: {{ radio.demod.rds["radiotext"] }} </li>
-            </ul>
-        {% endif %}
-    {% endif %}
+    Frequency: <span id="frequency"/></span> <br/>
+    Demodulation: <span id="demod_name"/></span> <br/>
+
+    <div id="demod-wbfm" style="display:none">
+        <ul>
+            <li>Callsign: <span id="wbfm-callsign"></span> </li>
+            <li>Genre: <span id="wbfm-genre"></span> </li>
+            <li>PS: <span id="wbfm-ps"></span> </li>
+            <li>Radio Text: <span id="wbfm-radiotext"></span> </li>
+            <li>Error Rate: <span id="wbfm-bler"></span> </li>
+        </ul>
+    </div>
 {% endblock %}

@@ -32,7 +32,12 @@ class WBFM(Demods):
             "callsign": None,
             "ps": None,
             "genre": None,
-            "radiotext": None
+            "radiotext": None,
+            "bler": None
+        }
+
+        self.stats = {
+            "rds": self.rds
         }
 
     def tick(self):
@@ -50,9 +55,14 @@ class WBFM(Demods):
         if not self.redsea:
             self.log.info("Initiating redsea...")
 
-            command = "redsea -u"
+            command = "redsea -uE"
             self.redsea = subprocess.Popen(command.split(" "), stdin=subprocess.PIPE, stdout=subprocess.PIPE)
             self.redsea_queue = self.radio.setup_stdout_queue(self.redsea)
+
+        if self.rtlproc.poll():
+            self.log.error("RTL command died")
+            self.reset()
+            return
 
         frame = self.rtlproc.stdout.read(1024 * 4)
 
@@ -93,6 +103,9 @@ class WBFM(Demods):
                             self.log.info("PS: %s" % ps)
 
                         self.rds["ps"] = ps
+
+                    if "bler" in data:
+                        self.rds["bler"] = data["bler"]
 
                     if "radiotext" in data:
                         ps = data["radiotext"]
