@@ -6,3 +6,4 @@ data
 *.log
 *.json
 rtlweb/dashboard/static/hls/*
+192k
